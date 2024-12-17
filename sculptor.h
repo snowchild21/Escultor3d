@@ -1,4 +1,4 @@
-#IFNDEF SCULPTOR_H
+#ifndef SCULPTOR_H
 #define SCULPTOR_H
 #include "voxel.h"
 class Sculptor {
