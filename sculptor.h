@@ -1,5 +1,5 @@
-#IFNDEF SCULTOR_H
-#define SCULTOR_H
+#IFNDEF SCULPTOR_H
+#define SCULPTOR_H
 #include "voxel.h"
 class Sculptor {
 private:
