@@ -9,35 +9,24 @@ Sculptor :: Sculptor(int nx1, int ny1, int nz1){ // construtor
 nx = nx1;
 ny = ny1;
 nz = nz1;
-r = g = b = a = 0;
-
-  // Criar a matriz 3D dinamicamente
-  v = new Voxel**[nx];
-  for(int i = 0; i < nx; i++){ // p/ cada linha
-    v[i] = new Voxel*[ny]; // associa-se uma coluna 
-  }
-  for(int i = 0; i < nx; i++){ // p/ cada linha
-    for(int j = 0; j < nz; j++){ // e p/ cada coluna
-      v[i][j] = new Voxel*[nz]; // associa-se uma "altura"
-    }
-  }
-  
-  for(int i = 0; i < ny; i++){
-    for(int j = 0; j < nx; j++){ 
+v = new Voxel**[nx];
+  for(int i = 0; i < nx; i++){
+    v[i] = new Voxel*[ny];
+    for(int j = 0; j < ny; j++){
+      v[i][j] = new Voxel[nz];
       for(int k = 0; k < nz; k++){
-        v[i][j][k].show = false; // inicializar cada elemento como vazio, ou falso
-
-         v[i][j][k].r = r;
-         v[i][j][k].g = g;
-         v[i][j][k].b = b;
-         v[i][j][k].a = a;
-      
-        }
+        v[i][j][k].show = false; 
+        v[i][j][k].r = 0;
+        v[i][j][k].g = 0;
+        v[i][j][k].b = 0;
+        v[i][j][k].a = 0;
+        
       }
+    }
   }
 }
 
-Sculptor :: ~Sculptor(int nx1, int ny1, int nz1){ // destrutor
+Sculptor::~Sculptor(){ // destrutor
   // liberar/deletar a memoria alocada!
   for(int i = 0; i < nx; i++){
     for(int j = 0; j < nz; j++){ 
@@ -122,9 +111,9 @@ void Sculptor :: cutBox(int x0_, int x1_, int y0_, int y1_, int z0_, int z1_){
       for(int i = 0; i < xc_; i++){
         for(int j = 0; j < yc_; j++){ 
           for(int k = 0; k < zc_; k++){
-            x2 = (double)(i - xc_)*(double)(i - xc_);
-            y2 = (double)(j - yc_)*(double)(j - yc_);
-            z2 = (double)(k - zc_)*(double)(k - zc_);
+            x2_ = (double)(i - xc_)*(double)(i - xc_);
+            y2_ = (double)(j - yc_)*(double)(j - yc_);
+            z2_ = (double)(k - zc_)*(double)(k - zc_);
             if((x2_ + y2_ + z2_) < (r_*r_)){
               v[i][j][k].show = false;
             }
@@ -138,7 +127,7 @@ void Sculptor :: cutBox(int x0_, int x1_, int y0_, int y1_, int z0_, int z1_){
       for(int i = 0; i < xc; i++){
         for(int j = 0; j < yc; j++){ 
           for(int k = 0; k < zc; k++){
-            xe = (double)(i - xc)*(double)(i - xc_/(rx*rx);
+            xe = (double)(i - xc)*(double)(i - xc)/(rx*rx);
             ye = (double)(i - yc)*(double)(i - yc)/(ry*ry);
             ze = (double)(i - zc)*(double)(i - zc)/(rz*rz);
             if((xe + ye + ze) < 1){
@@ -193,27 +182,27 @@ void Sculptor :: cutBox(int x0_, int x1_, int y0_, int y1_, int z0_, int z1_){
     ArqOFF<<Nvox*8<<" "<<Nvox*6<<" "<<0<<"\n"; // quantidade de vertices e de faces, 0 arestas pois não precisa indicar.
 
     // hora de colocar os valores de acordo com as orientações para o voxel ser um cubo
-    for(int a = 0; i < ny; a++){
-      for(int b = 0; j < nx; b++){ 
-        for(int c = 0; k < nz; c++){
+    for(int a = 0; a < ny; a++){
+      for(int b = 0; b < nx; b++){ 
+        for(int c = 0; c < nz; c++){
           if(v[a][b][c].show == true){
-            ArqOFF << x - 0.5 << " " << y - 0.5 << " " << z - 0.5 << std::endl<< std::flush;
-            ArqOFF << x - 0.5 << " " << y + 0.5 << " " << z - 0.5 << std::endl<< std::flush;
-            ArqOFF << x + 0.5 << " " << y + 0.5 << " " << z - 0.5 << std::endl<< std::flush;
-            ArqOFF << x + 0.5 << " " << y - 0.5 << " " << z - 0.5 << std::endl<< std::flush;
-            ArqOFF << x - 0.5 << " " << y - 0.5 << " " << z + 0.5 << std::endl<< std::flush;
-            ArqOFF << x - 0.5 << " " << y + 0.5 << " " << z + 0.5 << std::endl<< std::flush;
-            ArqOFF << x + 0.5 << " " << y + 0.5 << " " << z + 0.5 << std::endl<< std::flush;
-            ArqOFF << x + 0.5 << " " << y - 0.5 << " " << z + 0.5 << std::endl<< std::flush;
+            ArqOFF << a - 0.5 << " " << b - 0.5 << " " << c - 0.5 << std::endl<< std::flush;
+            ArqOFF << a - 0.5 << " " << b + 0.5 << " " << c - 0.5 << std::endl<< std::flush;
+            ArqOFF << a + 0.5 << " " << b + 0.5 << " " << c - 0.5 << std::endl<< std::flush;
+            ArqOFF << a + 0.5 << " " << b - 0.5 << " " << c - 0.5 << std::endl<< std::flush;
+            ArqOFF << a - 0.5 << " " << b - 0.5 << " " << c + 0.5 << std::endl<< std::flush;
+            ArqOFF << a - 0.5 << " " << b + 0.5 << " " << c + 0.5 << std::endl<< std::flush;
+            ArqOFF << a + 0.5 << " " << b + 0.5 << " " << c + 0.5 << std::endl<< std::flush;
+            ArqOFF << a + 0.5 << " " << b - 0.5 << " " << c + 0.5 << std::endl<< std::flush;
       }
      }
    }
  }
     
 Nvox = 0;
-    for(int i = 0; i < ny; a++){
-      for(int j = 0; j < nx; b++){ 
-        for(int k = 0; k < nz; c++){
+    for(int i = 0; i < ny; i++){
+      for(int j = 0; j < nx; j++){ 
+        for(int k = 0; k < nz; k++){
           if(v[i][j][k].show == true){
             aux = Nvox*8;
               ArqOFF<<4<<" "<<aux+0<<" "<<aux+3<<" "<<aux+2<<" "<<aux+1<<" "<<v[i][j][k].r<<" "
