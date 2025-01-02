@@ -1,8 +1,8 @@
-#ifndef voxel_h
-#define voxel_h
+#ifndef VOXEL_H
+#define VOXEL_H
 
-struct voxel{
+struct Voxel{
 float r, g, b, a;
-bool isOn;
+bool show;
 };
 #endif
