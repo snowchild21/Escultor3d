@@ -160,7 +160,7 @@ void Sculptor :: cutBox(int x0_, int x1_, int y0_, int y1_, int z0_, int z1_){
   // metodo para salvar arquivos ;) 
   void Sculptor :: writeOFF(const char* filename){
     std::ofstream ArqOFF;
-    fixed(ArqOFF); // correção da precisão do .off nas casas decimais
+     ArqOFF << std::fixed << std::setprecision(1);// correção da precisão do .off nas casas decimais
     int Nvox = 0, aux;
     ArqOFF.open(filename);
     
