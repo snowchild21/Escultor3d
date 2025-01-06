@@ -1,7 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include "sculptor.h"
-
+//terminal
+// g++ main.cpp Sculptor.cpp -o escultor
+// ./escultor
 int main(){
 
 Sculptor Zepellin(100, 100, 100);
